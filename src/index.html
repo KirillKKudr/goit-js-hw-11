@@ -10,12 +10,20 @@
 </head>
 
 <body>
-  <nav>
-    <li><a href="./1-timer.html">Timer</a></li>
-    <li><a href="./2-snackbar.html">Snackbar</a></li>
-  </nav>
+  
+    <form class="js-search search">
+        <input class="input-search" name="search" type="text" placeholder="Search for images..." />
+        <button class="btn-search" type="submit">Search</button>
+    </form>
 
-  <script type="module"></script>
+    <div class="container">
+        <span class="loader"></span>
+        <ul class="gallery"></ul>
+    </div>
+
+    <script type="module" src="./main.js"></script>
+   
+
 </body>
 
 </html>
