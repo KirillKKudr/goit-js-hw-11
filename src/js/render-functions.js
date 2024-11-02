@@ -1,27 +1,32 @@
 
-import iziToast from 'izitoast';
-import 'izitoast/dist/css/iziToast.min.css';
 
-export function renderImages(images, container) {
-  const markup = images.map(image => `
-    <div class="photo-card">
-      <img src="${image.webformatURL}" alt="${image.tags}" loading="lazy" />
-      <div class="info">
-        <p>Likes: ${image.likes}</p>
-        <p>Views: ${image.views}</p>
-        <p>Comments: ${image.comments}</p>
-        <p>Downloads: ${image.downloads}</p>
-      </div>
-    </div>
-  `).join('');
-  container.innerHTML = markup;
-}
+import iziToast from "izitoast";
+import "izitoast/dist/css/iziToast.min.css";
 
-export function showNoResultsMessage() {
+
+export const showNoResultsMessage = () => {
   iziToast.info({
-    title: 'Oops!',
-    message: 'Sorry, there are no images matching your search query. Please try again!',
-    position: 'topRight',
-    timeout: 3000,
+    title: 'No Results',
+    message: 'Sorry, there are no images matching your search query. Please try again!'
   });
-}
+};
+
+
+export const renderImages = (images, container) => {
+  const markup = images.map(({ webformatURL, largeImageURL, tags, likes, views, comments, downloads }) => {
+    return `
+      <li class="gallery-item">
+        <a href="${largeImageURL}">
+          <img src="${webformatURL}" alt="${tags}" loading="lazy" />
+        </a>
+        <div class="info">
+          <p><b>Likes:</b> ${likes}</p>
+          <p><b>Views:</b> ${views}</p>
+          <p><b>Comments:</b> ${comments}</p>
+          <p><b>Downloads:</b> ${downloads}</p>
+        </div>
+      </li>
+    `;
+  }).join('');
+  container.innerHTML = markup;  
+};
