@@ -1,29 +1,25 @@
-
-
 import { fetchImages } from './js/pixabay-api';
 import { renderImages, showNoResultsMessage } from './js/render-functions';
 import SimpleLightbox from "simplelightbox";
 import "simplelightbox/dist/simple-lightbox.min.css";
+import iziToast from "izitoast";
+import "izitoast/dist/css/iziToast.min.css";
 
 const form = document.querySelector('.search-form');
 const galleryContainer = document.querySelector('.gallery');
 const perPage = 12;
 let currentPage = 1;
-let lightbox;
-
-
-const initializeLightbox = () => {
-  lightbox = new SimpleLightbox('.gallery a');
-};
-
+let lightbox = new SimpleLightbox('.gallery a');  
 
 const showLoader = () => {
-  document.querySelector('.loader').style.display = 'block';
-};
-const hideLoader = () => {
-  document.querySelector('.loader').style.display = 'none';
+  const loader = document.querySelector('.loader');
+  if (loader) loader.style.display = 'block';
 };
 
+const hideLoader = () => {
+  const loader = document.querySelector('.loader');
+  if (loader) loader.style.display = 'none';
+};
 
 form.addEventListener('submit', (event) => {
   event.preventDefault();
@@ -34,8 +30,11 @@ form.addEventListener('submit', (event) => {
     return;
   }
 
- 
+  
   showLoader();
+
+  
+  galleryContainer.innerHTML = '';
 
   fetchImages(query, currentPage, perPage)
     .then(images => {
@@ -43,9 +42,8 @@ form.addEventListener('submit', (event) => {
       if (images.length === 0) {
         showNoResultsMessage();
       } else {
-        renderImages(images, galleryContainer);  
-        initializeLightbox();  
-        lightbox.refresh();
+        renderImages(images, galleryContainer);
+        lightbox.refresh();  
       }
       form.reset(); 
     })
