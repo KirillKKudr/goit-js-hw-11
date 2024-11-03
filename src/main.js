@@ -6,19 +6,19 @@ import iziToast from "izitoast";
 import "izitoast/dist/css/iziToast.min.css";
 
 const form = document.querySelector('.search-form');
-const galleryContainer = document.querySelector('.gallery');
+const galleryContainer = document.querySelector('.gallery-list');
 const perPage = 12;
 let currentPage = 1;
-let lightbox = new SimpleLightbox('.gallery a');  
+let lightbox = new SimpleLightbox('.gallery a');
 
 const showLoader = () => {
   const loader = document.querySelector('.loader');
-  if (loader) loader.style.display = 'block';
+  if (loader) loader.classList.add('show');
 };
 
 const hideLoader = () => {
   const loader = document.querySelector('.loader');
-  if (loader) loader.style.display = 'none';
+  if (loader) loader.classList.remove('show');
 };
 
 form.addEventListener('submit', (event) => {
@@ -30,25 +30,22 @@ form.addEventListener('submit', (event) => {
     return;
   }
 
-  
-  showLoader();
-
-  
-  galleryContainer.innerHTML = '';
+  showLoader(); 
+  galleryContainer.innerHTML = ''; 
 
   fetchImages(query, currentPage, perPage)
     .then(images => {
-      hideLoader();
+      hideLoader(); 
       if (images.length === 0) {
         showNoResultsMessage();
       } else {
         renderImages(images, galleryContainer);
-        lightbox.refresh();  
+        lightbox.refresh(); 
       }
       form.reset(); 
     })
     .catch(error => {
-      hideLoader();
+      hideLoader(); 
       console.error('Error processing images:', error);
       iziToast.error({ title: 'Error', message: 'Failed to load images' });
     });
