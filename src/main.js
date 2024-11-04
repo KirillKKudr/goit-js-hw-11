@@ -9,7 +9,8 @@ const form = document.querySelector('.search-form');
 const galleryContainer = document.querySelector('.gallery-list');
 const perPage = 12;
 let currentPage = 1;
-let lightbox = new SimpleLightbox('.gallery a');
+let lightbox = new SimpleLightbox('.gallery-list a');
+
 
 const showLoader = () => {
   const loader = document.querySelector('.loader');
